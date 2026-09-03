@@ -1,552 +1,473 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>21 Days 'Til 21 — TQ</title>
-
-  <style>
-    /* =========================================================
-       TQ'S 21 DAYS 'TIL 21
-       COLORS
-       ========================================================= */
-
-    :root {
-      --cream: #f8f5ee;
-      --cream-light: #fffdf8;
-      --navy: #102a43;
-      --navy-light: #1d405f;
-      --gold: #b5965c;
-      --gold-light: #d8c18f;
-      --text: #263746;
-      --muted: #7b858d;
-      --white: #ffffff;
-      --shadow: 0 12px 35px rgba(16, 42, 67, 0.12);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(
-          circle at top,
-          var(--cream-light) 0%,
-          var(--cream) 60%,
-          #eee9df 100%
-        );
-      color: var(--navy);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    /* =========================================================
-       MAIN CONTAINER
-       ========================================================= */
-
-    .container {
-      width: min(1000px, 92%);
-      margin: auto;
-      padding: 50px 0 70px;
-    }
-
-    /* =========================================================
-       HEADER
-       ========================================================= */
-
-    .header {
-      text-align: center;
-      margin-bottom: 45px;
-    }
-
-    .small-title {
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 400;
-      font-size: clamp(42px, 8vw, 76px);
-      line-height: 1;
-      margin: 0;
-      color: var(--navy);
-    }
-
-    .for-tq {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 23px;
-      font-style: italic;
-      margin-top: 14px;
-      color: var(--navy-light);
-    }
-
-    .gold-line {
-      width: 70px;
-      height: 1px;
-      background: var(--gold);
-      margin: 25px auto;
-    }
-
-    .dates {
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    /* =========================================================
-       COUNTDOWN
-       ========================================================= */
-
-    .countdown {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .countdown-number {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 48px;
-      color: var(--navy);
-    }
-
-    .countdown-text {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--muted);
-    }
-
-    /* =========================================================
-       DAY GRID
-       ========================================================= */
-
-    .days-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 15px;
-    }
-
-    .day-card {
-      min-height: 150px;
-      border: 1px solid rgba(16, 42, 67, 0.12);
-      border-radius: 18px;
-      background: rgba(255, 253, 248, 0.92);
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 18px;
-      transition: all 0.25s ease;
-    }
-
-    button.day-card {
-      cursor: pointer;
-      color: var(--navy);
-    }
-
-    button.day-card:hover:not(:disabled) {
-      transform: translateY(-5px);
-      box-shadow: 0 18px 40px rgba(16, 42, 67, 0.17);
-    }
-
-    .day-number {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 43px;
-      line-height: 1;
-    }
-
-    .day-label {
-      margin-top: 9px;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .day-status {
-      margin-top: 12px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    /* UNLOCKED */
-
-    .unlocked {
-      border: 1px solid var(--gold);
-      background: linear-gradient(
-        145deg,
-        #fffdf8,
-        #f6efe3
-      );
-    }
-
-    .unlocked .day-status {
-      color: var(--gold);
-      font-weight: bold;
-    }
-
-    /* LOCKED */
-
-    .locked {
-      opacity: 0.55;
-      cursor: not-allowed !important;
-    }
-
-    .locked .day-number {
-      color: #77838d;
-    }
-
-    /* =========================================================
-       BIRTHDAY SECTION
-       ========================================================= */
-
-    .birthday-section {
-      display: none;
-      margin-top: 30px;
-      padding: 45px 25px;
-      text-align: center;
-      border-radius: 25px;
-      background: var(--navy);
-      color: var(--white);
-      box-shadow: var(--shadow);
-    }
-
-    .birthday-section h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(34px, 6vw, 55px);
-      font-weight: 400;
-      margin: 12px 0;
-    }
-
-    .birthday-section p {
-      max-width: 600px;
-      margin: 15px auto 25px;
-      color: #e5ebf0;
-      line-height: 1.7;
-    }
-
-    .birthday-button {
-      border: 1px solid var(--gold-light);
-      background: transparent;
-      color: white;
-      padding: 13px 24px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .birthday-button:hover {
-      background: var(--gold);
-    }
-
-    /* =========================================================
-       MODAL
-       ========================================================= */
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      inset: 0;
-      background: rgba(5, 17, 29, 0.72);
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-content {
-      position: relative;
-      width: min(680px, 100%);
-      max-height: 88vh;
-      overflow-y: auto;
-      background: var(--cream-light);
-      border-radius: 25px;
-      padding: 40px;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
-    }
-
-    .close-button {
-      position: absolute;
-      right: 18px;
-      top: 13px;
-      border: none;
-      background: none;
-      color: var(--navy);
-      font-size: 30px;
-      cursor: pointer;
-    }
-
-    .modal-day {
-      color: var(--gold);
-      font-size: 11px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-    }
-
-    .modal-title {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 40px;
-      font-weight: 400;
-      color: var(--navy);
-      margin: 10px 0 25px;
-    }
-
-    .modal-body {
-      color: var(--text);
-      line-height: 1.8;
-      font-size: 16px;
-    }
-
-    .modal-body img {
-      max-width: 100%;
-      border-radius: 16px;
-      margin: 15px 0;
-    }
-
-    .modal-body video {
-      width: 100%;
-      border-radius: 16px;
-      margin: 15px 0;
-    }
-
-    .modal-body a {
-      color: var(--navy);
-      font-weight: bold;
-    }
-
-    .placeholder {
-      border: 1px dashed #b7aa96;
-      border-radius: 16px;
-      padding: 25px;
-      margin-top: 20px;
-      background: #fbf7ef;
-      text-align: center;
-      color: #73766f;
-    }
-
-    /* =========================================================
-       FOOTER
-       ========================================================= */
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    /* =========================================================
-       MOBILE
-       ========================================================= */
-
-    @media (max-width: 700px) {
-
-      .container {
-        padding-top: 35px;
-      }
-
-      .days-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
-
-      .day-card {
-        min-height: 125px;
-        padding: 10px;
-        border-radius: 15px;
-      }
-
-      .day-number {
-        font-size: 35px;
-      }
-
-      .day-label {
-        font-size: 8px;
-        letter-spacing: 1px;
-      }
-
-      .day-status {
-        font-size: 9px;
-      }
-
-      .modal-content {
-        padding: 30px 22px;
-      }
-
-      .modal-title {
-        font-size: 32px;
-      }
-    }
-
-    @media (max-width: 400px) {
-
-      .days-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .day-card {
-        min-height: 110px;
-      }
-
-      .day-number {
-        font-size: 30px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>21 Days 'Til 21 — TQ</title>
+
+<style>
+:root {
+  --cream: #f8f5ee;
+  --white: #fffdf8;
+  --navy: #102a43;
+  --navy-light: #1d405f;
+  --gold: #b5965c;
+  --gold-light: #d8c18f;
+  --gray: #6f7b86;
+  --locked: #ddd9d0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--navy);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.container {
+  max-width: 1050px;
+  margin: auto;
+  padding: 40px 20px 70px;
+}
+
+header {
+  text-align: center;
+  padding: 35px 10px;
+}
+
+.eyebrow {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+h1 {
+  font-size: clamp(40px, 7vw, 68px);
+  font-weight: 500;
+  margin: 12px 0 5px;
+}
+
+.subtitle {
+  font-size: 20px;
+  font-style: italic;
+  color: var(--navy-light);
+}
+
+.line {
+  width: 80px;
+  height: 1px;
+  background: var(--gold);
+  margin: 25px auto;
+}
+
+.status {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  color: var(--gray);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.day {
+  min-height: 135px;
+  background: var(--white);
+  border: 1px solid var(--gold-light);
+  border-radius: 16px;
+  padding: 18px 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.day:hover {
+  transform: translateY(-3px);
+}
+
+.day.locked {
+  background: var(--locked);
+  border-color: #c9c4b9;
+  color: #88847c;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.day-number {
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.locked .day-number {
+  color: #88847c;
+}
+
+.day-title {
+  font-size: 18px;
+  margin-top: 9px;
+}
+
+.lock {
+  margin-top: 8px;
+  font-size: 20px;
+}
+
+.birthday {
+  display: none;
+  margin-top: 35px;
+  padding: 40px 25px;
+  text-align: center;
+
+  background: var(--white);
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+}
+
+.birthday.show {
+  display: block;
+}
+
+.birthday h2 {
+  font-size: clamp(32px, 6vw, 52px);
+  margin: 10px 0;
+}
+
+.birthday p {
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+footer {
+  text-align: center;
+  margin-top: 45px;
+  color: var(--gray);
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+/* MODAL */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 42, 67, 0.65);
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+  z-index: 10;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  width: min(650px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background: var(--white);
+  border-radius: 22px;
+  border: 1px solid var(--gold-light);
+
+  padding: 32px 25px;
+
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+
+  border: none;
+  background: none;
+
+  font-size: 30px;
+  color: var(--navy);
+
+  cursor: pointer;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 31px;
+  margin: 8px 30px 24px;
+}
+
+.content {
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.content p {
+  margin: 13px 0;
+}
+
+/* BUTTONS */
+
+.button {
+  display: inline-block;
+
+  background: var(--navy);
+  color: white;
+
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+
+  padding: 11px 20px;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  margin: 8px 4px;
+}
+
+.button:hover {
+  background: var(--navy-light);
+}
+
+/* WORDLE */
+
+.wordle {
+  max-width: 330px;
+  margin: 15px auto;
+}
+
+.wordle-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.tile {
+  aspect-ratio: 1;
+
+  border: 2px solid #c7c2b8;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: Arial, sans-serif;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.correct {
+  background: #6d8f76;
+  color: white;
+  border-color: #6d8f76;
+}
+
+.present {
+  background: #c5a45e;
+  color: white;
+  border-color: #c5a45e;
+}
+
+.absent {
+  background: #777d82;
+  color: white;
+  border-color: #777d82;
+}
+
+.input-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.input-row input {
+  width: 150px;
+  padding: 11px;
+
+  border: 1px solid var(--gold-light);
+  border-radius: 10px;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  font-weight: bold;
+}
+
+.result {
+  min-height: 30px;
+  margin-top: 12px;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+/* MATH */
+
+.math-box {
+  max-width: 430px;
+  margin: auto;
+  text-align: left;
+}
+
+.math-question {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gold-light);
+}
+
+.math-question input {
+  float: right;
+  width: 75px;
+
+  padding: 7px;
+
+  border: 1px solid var(--gold-light);
+  border-radius: 8px;
+}
+
+/* COUPON */
+
+.coupon {
+  border: 2px dashed var(--gold);
+  border-radius: 18px;
+
+  padding: 28px;
+  margin: 15px 0;
+}
+
+/* PRIZES */
+
+.prize {
+  border: 1px dashed var(--gold);
+  border-radius: 16px;
+
+  padding: 25px;
+  margin: 20px 0;
+
+  background: #fffaf0;
+}
+
+.big {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .container {
+    padding: 22px 12px 55px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .day {
+    min-height: 125px;
+  }
+
+  .day-title {
+    font-size: 16px;
+  }
+}
+</style>
 </head>
-
 
 <body>
 
 <div class="container">
 
-  <!-- =======================================================
-       HEADER
-       ======================================================= -->
+<header>
 
-  <header class="header">
-
-    <div class="small-title">
-      A little something for
-    </div>
-
-    <h1>
-      21 Days 'Til 21
-    </h1>
-
-    <div class="for-tq">
-      for TQ ♡
-    </div>
-
-    <div class="gold-line"></div>
-
-    <div class="dates">
-      September 3 — September 24, 2026
-    </div>
-
-  </header>
-
-
-  <!-- =======================================================
-       COUNTDOWN
-       ======================================================= -->
-
-  <div class="countdown">
-
-    <div id="countdownNumber" class="countdown-number">
-      21
-    </div>
-
-    <div class="countdown-text">
-      days until TQ turns 21
-    </div>
-
+  <div class="eyebrow">
+    September 3 — September 23, 2026
   </div>
 
+  <h1>21 Days 'Til 21</h1>
 
-  <!-- =======================================================
-       DAY BUTTONS
-       ======================================================= -->
+  <div class="subtitle">
+    for TQ ♡
+  </div>
 
-  <main>
+  <div class="line"></div>
 
-    <div id="daysGrid" class="days-grid"></div>
+  <div class="status" id="status"></div>
 
+</header>
 
-    <!-- =====================================================
-         BIRTHDAY SECTION
-         ===================================================== -->
+<main class="grid" id="days"></main>
 
-    <section id="birthdaySection" class="birthday-section">
+<section class="birthday" id="birthday">
 
-      <div class="small-title" style="color: #d8c18f;">
-        September 24, 2026
-      </div>
+  <div class="eyebrow">
+    September 24, 2026
+  </div>
 
-      <h2>
-        Happy 21st Birthday, TQ ♡
-      </h2>
+  <h2>
+    HAPPY 21ST BIRTHDAY, TQ! 🎂💙
+  </h2>
 
-      <p>
-        You made it to 21.
-        Now it's time for your final surprise.
-      </p>
+  <p>
+    Today is finally here. 🥳
+  </p>
 
-      <button
-        class="birthday-button"
-        onclick="openBirthday()"
-      >
-        Open Your Birthday Surprise
-      </button>
+  <p>
+    Happy birthday to someone who deserves the absolute best.
+    I hope your 21st is as amazing as you are. 🤍
+  </p>
 
-    </section>
+</section>
 
-  </main>
-
-
-  <footer>
-    Made with love ♡
-  </footer>
+<footer>
+  Made with love ♡
+</footer>
 
 </div>
 
 
-<!-- =========================================================
-     POP-UP WINDOW
-     ========================================================= -->
+<!-- POPUP -->
 
-<div
-  id="modal"
-  class="modal"
-  onclick="closeIfOutside(event)"
->
+<div class="modal" id="modal">
 
-  <div class="modal-content">
+  <div class="modal-box">
 
-    <button
-      class="close-button"
-      onclick="closeModal()"
-      aria-label="Close"
-    >
+    <button class="close" onclick="closeModal()">
       ×
     </button>
 
-    <div
-      id="modalDay"
-      class="modal-day"
-    ></div>
+    <h2 class="modal-title" id="modalTitle"></h2>
 
-    <div
-      id="modalTitle"
-      class="modal-title"
-    ></div>
-
-    <div
-      id="modalBody"
-      class="modal-body"
-    ></div>
+    <div class="content" id="modalContent"></div>
 
   </div>
 
@@ -555,782 +476,1102 @@
 
 <script>
 
-/* ============================================================
-   IMPORTANT DATES
-   ============================================================
+/* =====================================================
+   SETTINGS
+===================================================== */
 
-   DO NOT CHANGE THESE unless you want to change the countdown.
+const START_DATE =
+  new Date("2026-09-03T00:00:00");
 
-   Day 1 = September 3, 2026
-   Day 21 = September 23, 2026
-   Birthday = September 24, 2026
-   ============================================================ */
-
-const START_DATE = new Date("2026-09-03T00:00:00");
-
-const BIRTHDAY_DATE = new Date("2026-09-24T00:00:00");
+const BIRTHDAY_DATE =
+  new Date("2026-09-24T00:00:00");
 
 
-/* ============================================================
-   YOUR 21 SURPRISES
-   ============================================================
+/* =====================================================
+   ADD YOUR LINKS HERE
+===================================================== */
 
-   THIS IS THE MAIN PART YOU WILL EDIT.
+/*
+   DAY 8:
+   Replace the text inside the quotes with
+   the link to the song you want to use.
 
-   Each day has:
+   Example:
+   const SONG_URL = "https://...";
+*/
 
-   title:
-   The title TQ sees when he opens the day.
+const SONG_URL =
+  "PASTE_YOUR_SONG_LINK_HERE";
 
-   content:
-   The actual surprise.
 
-   You can use normal HTML.
+/*
+   DAY 10:
+   Replace the text inside the quotes with
+   your Wawa gift card link.
+*/
 
-   Examples:
+const WAWA_URL =
+  "PASTE_YOUR_WAWA_GIFT_CARD_LINK_HERE";
 
-   TEXT:
-   <p>Hello TQ! ♡</p>
 
-   PHOTO:
-   <img src="YOUR-PHOTO-LINK-HERE">
-
-   LINK:
-   <a href="YOUR-LINK-HERE" target="_blank">
-      Click here ♡
-   </a>
-
-   VIDEO:
-   <video controls>
-      <source src="YOUR-VIDEO-LINK-HERE" type="video/mp4">
-   </video>
-
-   ============================================================ */
-
+/* =====================================================
+   YOUR 21 DAYS
+===================================================== */
 
 const surprises = {
 
+1: {
+  title: "Day 1",
 
-  /* ==========================================================
-     DAY 1
-     ========================================================== */
+  content: `
 
-  1: {
-    title: "And So It Begins…",
+    <p>
+      I love you so much. 🤍
+    </p>
 
-    content: `
-      <!-- EDIT HERE -->
+    <p>
+      I hope this countdown shows you just how amazing
+      I think you are and how much you mean to me.
+    </p>
 
-      <p>
-        Welcome to your 21 Days 'Til 21 countdown, TQ ♡
-      </p>
+    <p>
+      You truly are one of the best people ever,
+      and I feel so lucky to have you in my life. 💙
+    </p>
 
-      <p>
-        For the next 21 days, you have one little surprise
-        waiting for you each day.
-      </p>   I hope that when you open each one, you know that I put a little thought
-into making these 21 days feel special for you.
-</p>
+    <p>
+      So, for the next 21 days, I wanted to give you
+      a little something to look forward to every day
+      leading up to your 21st birthday.
+    </p>
 
-<p><strong>So… here we go.</strong></p>
+    <p>
+      I hope every day reminds you just how loved
+      and appreciated you are.
+    </p>
 
-<p><strong>Day 1 of 21.</strong></p>
+    <p>
+      <strong>
+        I love you so, so much. 🤍
+      </strong>
+    </p>
+
+  `
+},
+
+
+/* DAY 2 */
+
+2: {
+
+  title: "A Little Game 🍟",
+
+  content: `
+
+    <p>
+      Let's see if you can figure out today's word… 👀
+    </p>
+
+    <div class="wordle">
+
+      <div
+        id="wordle2board"
+        class="wordle-board">
+      </div>
+
+      <div class="input-row">
+
+        <input
+          id="wordle2input"
+          maxlength="5"
+          placeholder="5 letters">
+
+        <button
+          class="button"
+          onclick="guessWordle(2, 'FRIES')">
+
+          Guess
+
+        </button>
 
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 2
-     ========================================================== */
-
-  2: {
-    title: "Day 2",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 2 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 2 surprise here ✦
+      <div
+        id="wordle2result"
+        class="result">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
+    </div>
+
+  `
+},
 
 
-  /* ==========================================================
-     DAY 3
-     ========================================================== */
+/* DAY 3 */
 
-  3: {
-    title: "Day 3",
+3: {
 
-    content: `
-      <!-- EDIT HERE -->
+  title: "Math Time 🧮",
 
-      <p>
-        Your Day 3 message goes here.
-      </p>
+  content: `
 
-      <div class="placeholder">
-        ✦ Put your Day 3 surprise here ✦
+    <p>
+      Solve each equation.
+    </p>
+
+    <p>
+      Then use
+      <strong>A=1, B=2, C=3…</strong>
+      to turn the answers into letters.
+    </p>
+
+    <div class="math-box">
+
+      <div class="math-question">
+        1. 3 × 3 =
+        <input id="m1" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 4
-     ========================================================== */
-
-  4: {
-    title: "Day 4",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 4 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 4 surprise here ✦
+      <div class="math-question">
+        2. 6 + 6 =
+        <input id="m2" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 5
-     ========================================================== */
-
-  5: {
-    title: "Day 5",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 5 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 5 surprise here ✦
+      <div class="math-question">
+        3. 3 × 5 =
+        <input id="m3" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 6
-     ========================================================== */
-
-  6: {
-    title: "Day 6",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 6 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 6 surprise here ✦
+      <div class="math-question">
+        4. 11 × 2 =
+        <input id="m4" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 7
-     ========================================================== */
-
-  7: {
-    title: "Day 7",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 7 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 7 surprise here ✦
+      <div class="math-question">
+        5. 10 − 5 =
+        <input id="m5" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 8
-     ========================================================== */
-
-  8: {
-    title: "Day 8",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 8 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 8 surprise here ✦
+      <div class="math-question">
+        6. 5 × 5 =
+        <input id="m6" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 9
-     ========================================================== */
-
-  9: {
-    title: "Day 9",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 9 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 9 surprise here ✦
+      <div class="math-question">
+        7. 3 × 5 =
+        <input id="m7" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 10
-     ========================================================== */
-
-  10: {
-    title: "Day 10",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 10 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 10 surprise here ✦
+      <div class="math-question">
+        8. 3 × 7 =
+        <input id="m8" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 11
-     ========================================================== */
-
-  11: {
-    title: "Day 11",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 11 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 11 surprise here ✦
+      <div class="math-question">
+        9. 3 × 7 =
+        <input id="m9" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 12
-     ========================================================== */
-
-  12: {
-    title: "Day 12",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 12 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 12 surprise here ✦
+      <div class="math-question">
+        10. 7 × 3 =
+        <input id="m10" type="number">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
+    </div>
+
+    <button
+      class="button"
+      onclick="checkMath()">
+
+      Reveal Message
+
+    </button>
+
+    <div
+      id="mathresult"
+      class="result">
+    </div>
+
+  `
+},
 
 
-  /* ==========================================================
-     DAY 13
-     ========================================================== */
+/* DAY 4 */
 
-  13: {
-    title: "Day 13",
+4: {
 
-    content: `
-      <!-- EDIT HERE -->
+  title: "A Little Something For You 🌷",
 
-      <p>
-        Your Day 13 message goes here.
-      </p>
+  content: `
 
-      <div class="placeholder">
-        ✦ Put your Day 13 surprise here ✦
+    <p style="font-size:75px">
+      🐱
+    </p>
+
+    <p style="font-size:55px">
+      💐
+    </p>
+
+    <p>
+      Just a little flower delivery for you. 🤍
+    </p>
+
+  `
+},
+
+
+/* DAY 5 */
+
+5: {
+
+  title: "The Case of the Bus 🚌🕵️",
+
+  content: `
+
+    <p>
+      <strong>
+        CASE FILE #005 🚨
+      </strong>
+    </p>
+
+    <p>
+      Something happened a while ago…
+    </p>
+
+    <p>
+      There was a bus. 🚌
+      <br>
+      There was a certain someone involved. 👀
+      <br>
+      And somehow, you survived to become the birthday boy.
+    </p>
+
+    <p>
+      <strong>Clue #1:</strong>
+      Who was behind the wheel?
+    </p>
+
+    <p>
+      <strong>Clue #2:</strong>
+      What was involved? 🚌
+    </p>
+
+    <p>
+      <strong>Clue #3:</strong>
+      Who is still going to be turning 21?
+    </p>
+
+    <p>
+      <strong>
+        CASE SOLVED: TQ. 😂
+      </strong>
+    </p>
+
+    <p>
+      Congratulations, detective.
+      You have successfully solved absolutely nothing.
+    </p>
+
+  `
+},
+
+
+/* DAY 6 */
+
+6: {
+
+  title: "Day 6",
+
+  content: `
+
+    <p class="big">
+      YOU'RE AMAZING.
+    </p>
+
+    <p>
+      ✨
+    </p>
+
+  `
+},
+
+
+/* DAY 7 */
+
+7: {
+
+  title: "A Little Coupon 💙",
+
+  content: `
+
+    <div class="coupon">
+
+      <div class="eyebrow">
+        ONE-TIME COUPON
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 14
-     ========================================================== */
-
-  14: {
-    title: "Day 14",
-
-    content: `
-      <!-- EDIT HERE -->
+      <h3 style="font-size:30px">
+        10 KISSES 💋
+      </h3>
 
       <p>
-        Your Day 14 message goes here.
+        <strong>Valid for:</strong>
+        TQ
       </p>
 
-      <div class="placeholder">
-        ✦ Put your Day 14 surprise here ✦
+      <p>
+        <strong>Amount:</strong>
+        10 kisses
+      </p>
+
+      <p>
+        <strong>Expiration:</strong>
+        Never 😉
+      </p>
+
+      <p>
+        <strong>Use:</strong>
+        1 time
+      </p>
+
+    </div>
+
+  `
+},
+
+
+/* DAY 8 */
+
+8: {
+
+  title: "A Little Song For You 🎧",
+
+  content: `
+
+    <p>
+      I heard this and thought of you. 🤍
+    </p>
+
+    <p>
+      <strong>
+        Honey Bee — Olivia Rodrigo
+      </strong>
+    </p>
+
+    <a
+      id="songButton"
+      class="button"
+      target="_blank"
+      rel="noopener">
+
+      Listen Here ♫
+
+    </a>
+
+  `
+},
+
+
+/* DAY 9 */
+
+9: {
+
+  title: "A Little Appreciation 🤍",
+
+  content: `
+
+    <p>
+      I really appreciate your patience with me.
+      I know I'm a lot sometimes, but you're always
+      so kind and somehow make me think reasonably.
+    </p>
+
+    <p>
+      You somehow always know when something is wrong,
+      and I really appreciate that you care enough to notice.
+      🤍
+    </p>
+
+  `
+},
+
+
+/* DAY 10 */
+
+10: {
+
+  title: "A Little Treat 🎁",
+
+  content: `
+
+    <p>
+      I know it's not your birthday yet…
+      but here's a little something for you anyway. 🤍
+    </p>
+
+    <p>
+      <strong>
+        Go get yourself something yummy :)
+      </strong>
+    </p>
+
+    <a
+      id="wawaButton"
+      class="button"
+      target="_blank"
+      rel="noopener">
+
+      Open Your Gift Card 🎁
+
+    </a>
+
+  `
+},
+
+
+/* DAY 11 */
+
+11: {
+
+  title: "5 Things I Love About You 🤍",
+
+  content: `
+
+    <p>
+      <strong>
+        1. You're actually so kind.
+      </strong>
+
+      <br>
+
+      You have such a kind heart,
+      and I really appreciate that about you.
+    </p>
+
+
+    <p>
+      <strong>
+        2. You're NOT Fobby vibes at all. 😂
+      </strong>
+
+      <br>
+
+      If you know, you know. 🤷‍♀️
+    </p>
+
+
+    <p>
+      <strong>
+        3. You're very gentle.
+      </strong>
+
+      <br>
+
+      I love how gentle and patient you are with me.
+    </p>
+
+
+    <p>
+      <strong>
+        4. You know how to love me
+        without me always having to ask.
+      </strong>
+
+      <br>
+
+      You just notice the little things,
+      and that means so much to me.
+    </p>
+
+
+    <p>
+      <strong>
+        5. You're caring.
+      </strong>
+
+      <br>
+
+      You genuinely care about me and
+      the people around you,
+      and I love that about you. 💙
+    </p>
+
+
+    <p>
+      <strong>
+        And that's just 5 of the many
+        things I love about you. 🤍
+      </strong>
+    </p>
+
+  `
+},
+
+
+/* DAYS 12–16 */
+
+12: {
+
+  title: "Random Prize #1 🎁",
+
+  content: `
+
+    <div class="prize">
+
+      <p>
+        <strong>Your prize:</strong>
+      </p>
+
+      <p class="big">
+        You get one whole day where
+        I cannot get mad at you. 😂
+      </p>
+
+      <p>
+        Enjoy it. Use it wisely.
+      </p>
+
+      <p>
+        <em>
+          This offer expires at midnight. ⏰
+        </em>
+      </p>
+
+    </div>
+
+  `
+},
+
+
+13: {
+
+  title: "Random Prize #2 🎁",
+
+  content: `
+
+    <div class="prize">
+
+      <p>
+        <strong>Your prize:</strong>
+      </p>
+
+      <p class="big">
+        You get whatever you want from me today. 👀
+      </p>
+
+      <p>
+        No questions asked.
+        <br>
+        Enjoy your prize. 🤍
+      </p>
+
+    </div>
+
+  `
+},
+
+
+14: {
+
+  title: "Random Prize #3 🎁",
+
+  content: `
+
+    <div class="prize">
+
+      <p>
+        <strong>Your prize:</strong>
+      </p>
+
+      <p class="big">
+        Nothing, tbh. 😂
+      </p>
+
+      <p>
+        Be grateful you're mine. 💙
+      </p>
+
+    </div>
+
+  `
+},
+
+
+15: {
+
+  title: "Random Prize #4 🎁",
+
+  content: `
+
+    <div class="prize">
+
+      <p>
+        <strong>Your prize:</strong>
+      </p>
+
+      <p class="big">
+        You get to pick whatever you want
+        to do on our next date. 🎟️
+      </p>
+
+      <p>
+        Your choice. Your rules. 🤍
+      </p>
+
+    </div>
+
+  `
+},
+
+
+16: {
+
+  title: "Random Prize #5 🎁",
+
+  content: `
+
+    <div class="prize">
+
+      <p>
+        <strong>Your prize:</strong>
+      </p>
+
+      <p class="big">
+        💋 KISSES. 💋
+      </p>
+
+      <p>
+        That's it.
+        That's the prize. 😂🤍
+      </p>
+
+    </div>
+
+  `
+},
+
+
+/* DAY 17 */
+
+17: {
+
+  title: "Unscramble It 🔤",
+
+  content: `
+
+    <p>
+      Can you figure this one out? 👀
+    </p>
+
+    <div class="prize">
+
+      <p style="
+        font:bold 30px Arial;
+        letter-spacing:4px;
+      ">
+        E L U B &nbsp; N A S S I N
+      </p>
+
+      <p>
+        Unscramble the letters to reveal
+        something very specific… 🚗
+      </p>
+
+      <button
+        class="button"
+        onclick="
+          document.getElementById('answer17')
+          .textContent='BLUE NISSAN 💙🚗'
+        ">
+
+        Reveal Answer
+
+      </button>
+
+      <p
+        id="answer17"
+        class="big">
+      </p>
+
+    </div>
+
+  `
+},
+
+
+/* DAY 18 */
+
+18: {
+
+  title: "A Stupid Joke 🤡",
+
+  content: `
+
+    <p style="font-size:25px">
+      Why don't eggs tell jokes? 🥚
+    </p>
+
+    <p>
+      <strong>
+        Because they might crack each other up. 😂
+      </strong>
+    </p>
+
+    <p>
+      Day 18 complete.
+      You may now leave.
+    </p>
+
+  `
+},
+
+
+/* DAY 19 */
+
+19: {
+
+  title: "A Little Wordle 🧸",
+
+  content: `
+
+    <p>
+      Let's see if you can figure out today's word! 👀
+    </p>
+
+    <p>
+      Hint: 🧸🤍
+    </p>
+
+    <div class="wordle">
+
+      <div
+        id="wordle19board"
+        class="wordle-board">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
+      <div class="input-row">
 
+        <input
+          id="wordle19input"
+          maxlength="5"
+          placeholder="5 letters">
 
-  /* ==========================================================
-     DAY 15
-     ========================================================== */
+        <button
+          class="button"
+          onclick="guessWordle(19, 'TEDDY')">
 
-  15: {
-    title: "Day 15",
+          Guess
 
-    content: `
-      <!-- EDIT HERE -->
+        </button>
 
-      <p>
-        Your Day 15 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 15 surprise here ✦
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 16
-     ========================================================== */
-
-  16: {
-    title: "Day 16",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 16 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 16 surprise here ✦
+      <div
+        id="wordle19result"
+        class="result">
       </div>
 
-      <!-- END EDIT -->
-    `
-  },
+    </div>
+
+  `
+},
 
 
-  /* ==========================================================
-     DAY 17
-     ========================================================== */
+/* DAY 20 */
 
-  17: {
-    title: "Day 17",
+20: {
 
-    content: `
-      <!-- EDIT HERE -->
+  title: "Another Stupid Joke 🤡",
 
-      <p>
-        Your Day 17 message goes here.
-      </p>
+  content: `
 
-      <div class="placeholder">
-        ✦ Put your Day 17 surprise here ✦
-      </div>
+    <p style="font-size:25px">
+      What do you call a fish wearing a bowtie?
+      🐟🎀
+    </p>
 
-      <!-- END EDIT -->
-    `
-  },
+    <p>
+      <strong>
+        Sofishticated. 😭
+      </strong>
+    </p>
 
+    <p>
+      You're welcome for that.
+    </p>
 
-  /* ==========================================================
-     DAY 18
-     ========================================================== */
-
-  18: {
-    title: "Day 18",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 18 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 18 surprise here ✦
-      </div>
-
-      <!-- END EDIT -->
-    `
-  },
+  `
+},
 
 
-  /* ==========================================================
-     DAY 19
-     ========================================================== */
+/* DAY 21 */
 
-  19: {
-    title: "Day 19",
+21: {
 
-    content: `
-      <!-- EDIT HERE -->
+  title: "Day 21 💙",
 
-      <p>
-        Your Day 19 message goes here.
-      </p>
+  content: `
 
-      <div class="placeholder">
-        ✦ Put your Day 19 surprise here ✦
-      </div>
+    <p class="big">
+      HAPPY BIRTHDAYYYY 🥳🎂💙
+    </p>
 
-      <!-- END EDIT -->
-    `
-  },
+    <p>
+      Check your iMessage 👀📱
+    </p>
 
-
-  /* ==========================================================
-     DAY 20
-     ========================================================== */
-
-  20: {
-    title: "Day 20",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        Your Day 20 message goes here.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 20 surprise here ✦
-      </div>
-
-      <!-- END EDIT -->
-    `
-  },
-
-
-  /* ==========================================================
-     DAY 21
-     ========================================================== */
-
-  21: {
-    title: "One More Sleep…",
-
-    content: `
-      <!-- EDIT HERE -->
-
-      <p>
-        ONE MORE SLEEP. 👀
-      </p>
-
-      <p>
-        Tomorrow is the big day, TQ.
-      </p>
-
-      <div class="placeholder">
-        ✦ Put your Day 21 / birthday-eve surprise here ✦
-      </div>
-
-      <!-- END EDIT -->
-    `
-  }
+  `
+}
 
 };
 
 
-/* ============================================================
-   CALCULATE WHICH DAY IS UNLOCKED
-   ============================================================ */
+/* =====================================================
+   COUNTDOWN LOGIC
+===================================================== */
 
-function getDaysUnlocked() {
+function dateOnly(date) {
 
-  const today = new Date();
-
-  const currentDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
   );
 
-  const start = new Date(
-    START_DATE.getFullYear(),
-    START_DATE.getMonth(),
-    START_DATE.getDate()
-  );
-
-  const difference =
-    Math.floor(
-      (currentDate - start) / 86400000
-    );
-
-  return Math.max(
-    0,
-    Math.min(21, difference + 1)
-  );
 }
 
 
-/* ============================================================
-   CREATE THE 21 DAY BUTTONS
-   ============================================================ */
+function getDaysUnlocked() {
+
+  const today =
+    dateOnly(new Date());
+
+  const start =
+    dateOnly(START_DATE);
+
+  const difference =
+    Math.floor(
+      (today - start) / 86400000
+    ) + 1;
+
+  return Math.max(
+    0,
+    Math.min(21, difference)
+  );
+
+}
+
+
+/* =====================================================
+   DISPLAY DAYS
+===================================================== */
 
 function renderDays() {
-
-  const grid =
-    document.getElementById("daysGrid");
 
   const unlocked =
     getDaysUnlocked();
 
+  const grid =
+    document.getElementById("days");
+
   grid.innerHTML = "";
 
+
+  const titles = {
+
+    1: "Love",
+    2: "Wordle",
+    3: "Math",
+    4: "Flowers",
+    5: "Mystery",
+    6: "A Reminder",
+    7: "Coupon",
+    8: "Song",
+    9: "Appreciation",
+    10: "Gift",
+    11: "5 Things",
+    12: "Random Prize",
+    13: "Random Prize",
+    14: "Random Prize",
+    15: "Random Prize",
+    16: "Random Prize",
+    17: "Unscramble",
+    18: "Joke",
+    19: "Wordle",
+    20: "Joke",
+    21: "Birthday Eve"
+
+  };
+
+
   for (
-    let day = 1;
-    day <= 21;
-    day++
+    let i = 1;
+    i <= 21;
+    i++
   ) {
 
-    const isUnlocked =
-      day <= unlocked;
+    const open =
+      i <= unlocked;
 
-    const button =
-      document.createElement("button");
+    const card =
+      document.createElement("div");
 
-    button.className =
-      "day-card " +
-      (isUnlocked
-        ? "unlocked"
-        : "locked");
+    card.className =
+      "day" +
+      (open ? "" : " locked");
 
-    button.disabled =
-      !isUnlocked;
 
-    button.innerHTML = `
+    card.innerHTML = `
 
       <div class="day-number">
-        ${day}
+        Day ${i}
       </div>
 
-      <div class="day-label">
-        Day ${day}
+      <div class="day-title">
+        ${titles[i]}
       </div>
 
-      <div class="day-status">
-        ${
-          isUnlocked
-            ? "✦ OPEN"
-            : "🔒 LOCKED"
-        }
-      </div>
+      ${
+        open
+          ? ""
+          : "<div class='lock'>🔒</div>"
+      }
 
     `;
 
-    if (isUnlocked) {
 
-      button.onclick =
-        function() {
-          openDay(day);
-        };
+    if (open) {
+
+      card.onclick =
+        () => openDay(i);
 
     }
 
-    grid.appendChild(button);
+
+    grid.appendChild(card);
+
   }
-}
 
 
-/* ============================================================
-   UPDATE COUNTDOWN
-   ============================================================ */
-
-function updateCountdown() {
-
-  const today = new Date();
+  const today =
+    dateOnly(new Date());
 
   const birthday =
-    new Date(BIRTHDAY_DATE);
+    dateOnly(BIRTHDAY_DATE);
 
-  const difference =
-    Math.ceil(
-      (birthday - today) / 86400000
+
+  document
+    .getElementById("birthday")
+    .classList
+    .toggle(
+      "show",
+      today >= birthday
     );
 
-  const countdown =
-    document.getElementById(
-      "countdownNumber"
-    );
 
-  if (difference > 0) {
+  document
+    .getElementById("status")
+    .textContent =
+      today >= birthday
+        ? "The countdown is complete 💙"
+        : `${unlocked} of 21 surprises unlocked`;
 
-    countdown.textContent =
-      difference;
-
-  } else {
-
-    countdown.textContent =
-      "21";
-
-  }
 }
 
 
-/* ============================================================
-   OPEN A DAY
-   ============================================================ */
+/* =====================================================
+   OPEN DAY
+===================================================== */
 
-function openDay(day) {
+function openDay(number) {
 
   const surprise =
-    surprises[day];
+    surprises[number];
 
   if (!surprise) return;
 
-  document.getElementById(
-    "modalDay"
-  ).textContent =
-    "Day " + day;
 
-  document.getElementById(
-    "modalTitle"
-  ).textContent =
-    surprise.title;
+  document
+    .getElementById("modalTitle")
+    .textContent =
+      surprise.title;
 
-  document.getElementById(
-    "modalBody"
-  ).innerHTML =
-    surprise.content;
+
+  document
+    .getElementById("modalContent")
+    .innerHTML =
+      surprise.content;
+
 
   document
     .getElementById("modal")
     .classList
     .add("show");
+
+
+  /* SONG */
+
+  if (number === 8) {
+
+    const button =
+      document.getElementById("songButton");
+
+    if (
+      SONG_URL.startsWith("http")
+    ) {
+
+      button.href =
+        SONG_URL;
+
+    } else {
+
+      button.href = "#";
+
+      button.textContent =
+        "Song link coming soon ♫";
+
+      button.onclick =
+        event => event.preventDefault();
+
+    }
+
+  }
+
+
+  /* WAWA */
+
+  if (number === 10) {
+
+    const button =
+      document.getElementById("wawaButton");
+
+    if (
+      WAWA_URL.startsWith("http")
+    ) {
+
+      button.href =
+        WAWA_URL;
+
+    } else {
+
+      button.href = "#";
+
+      button.textContent =
+        "Gift card link coming soon 🎁";
+
+      button.onclick =
+        event => event.preventDefault();
+
+    }
+
+  }
+
 }
 
 
-/* ============================================================
-   OPEN BIRTHDAY SURPRISE
-   ============================================================ */
-
-function openBirthday() {
-
-  document.getElementById(
-    "modalDay"
-  ).textContent =
-    "September 24, 2026";
-
-  document.getElementById(
-    "modalTitle"
-  ).textContent =
-    "Happy 21st Birthday, TQ ♡";
-
-  document.getElementById(
-    "modalBody"
-  ).innerHTML = `
-
-    <!-- =========================================
-         EDIT YOUR FINAL BIRTHDAY MESSAGE HERE
-         ========================================= -->
-
-    <p>
-      Happy 21st birthday, TQ! ♡
-    </p>
-
-    <p>
-      You officially made it.
-    </p>
-
-    <div class="placeholder">
-      ✦ PUT YOUR BIG FINAL BIRTHDAY MESSAGE HERE ✦
-      <br><br>
-      You can also add photos, videos,
-      playlists, or clues about your real-life presents.
-    </div>
-
-    <!-- END EDIT -->
-
-  `;
-
-  document
-    .getElementById("modal")
-    .classList
-    .add("show");
-}
-
-
-/* ============================================================
+/* =====================================================
    CLOSE MODAL
-   ============================================================ */
+===================================================== */
 
 function closeModal() {
 
@@ -1338,87 +1579,329 @@ function closeModal() {
     .getElementById("modal")
     .classList
     .remove("show");
-}
-
-
-function closeIfOutside(event) {
-
-  if (
-    event.target ===
-    document.getElementById("modal")
-  ) {
-
-    closeModal();
-
-  }
 
 }
 
 
-/* ============================================================
-   SHOW BIRTHDAY SECTION ON SEPTEMBER 24
-   ============================================================ */
+document
+  .getElementById("modal")
+  .addEventListener(
+    "click",
+    event => {
 
-function checkBirthday() {
+      if (
+        event.target.id === "modal"
+      ) {
 
-  const today = new Date();
+        closeModal();
 
-  const birthday =
-    new Date(BIRTHDAY_DATE);
+      }
 
-  const birthdaySection =
-    document.getElementById(
-      "birthdaySection"
-    );
+    }
+  );
 
-  if (today >= birthday) {
-
-    birthdaySection.style.display =
-      "block";
-
-  }
-
-}
-
-
-/* ============================================================
-   START EVERYTHING
-   ============================================================ */
-
-renderDays();
-updateCountdown();
-checkBirthday();
-
-
-/*
-   Update the page every minute.
-   This means if TQ happens to have the page open
-   when midnight passes, the page can refresh its
-   locked/unlocked state.
-*/
-
-setInterval(function() {
-
-  renderDays();
-  updateCountdown();
-  checkBirthday();
-
-}, 60000);
-
-
-/*
-   Allow ESC key to close the popup.
-*/
 
 document.addEventListener(
   "keydown",
-  function(event) {
+  event => {
 
     if (event.key === "Escape") {
+
       closeModal();
+
     }
 
   }
+);
+
+
+/* =====================================================
+   WORDLE
+===================================================== */
+
+const wordleState = {
+
+  2: {
+    guesses: []
+  },
+
+  19: {
+    guesses: []
+  }
+
+};
+
+
+function makeBoard(
+  boardID,
+  state
+) {
+
+  const board =
+    document.getElementById(
+      boardID
+    );
+
+  board.innerHTML = "";
+
+
+  state.guesses.forEach(
+    guess => {
+
+      [...guess.word].forEach(
+        (letter, index) => {
+
+          const tile =
+            document.createElement(
+              "div"
+            );
+
+          tile.className =
+            "tile";
+
+
+          if (
+            letter ===
+            guess.answer[index]
+          ) {
+
+            tile.classList.add(
+              "correct"
+            );
+
+          }
+
+          else if (
+            guess.answer.includes(
+              letter
+            )
+          ) {
+
+            tile.classList.add(
+              "present"
+            );
+
+          }
+
+          else {
+
+            tile.classList.add(
+              "absent"
+            );
+
+          }
+
+
+          tile.textContent =
+            letter;
+
+          board.appendChild(
+            tile
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+function guessWordle(
+  number,
+  answer
+) {
+
+  const input =
+    document.getElementById(
+      `wordle${number}input`
+    );
+
+  const result =
+    document.getElementById(
+      `wordle${number}result`
+    );
+
+
+  const value =
+    input.value
+      .trim()
+      .toUpperCase();
+
+
+  if (
+    value.length !== 5
+  ) {
+
+    result.textContent =
+      "Enter a 5-letter word!";
+
+    return;
+
+  }
+
+
+  const state =
+    wordleState[number];
+
+
+  if (
+    state.guesses.length >= 6
+  ) {
+
+    return;
+
+  }
+
+
+  state.guesses.push({
+
+    word: value,
+
+    answer: answer
+
+  });
+
+
+  makeBoard(
+    `wordle${number}board`,
+    state
+  );
+
+
+  input.value = "";
+
+
+  if (
+    value === answer
+  ) {
+
+    if (number === 2) {
+
+      result.innerHTML = `
+        <strong>
+          YOU GOT IT! 🥳💙
+        </strong>
+        <br>
+        You know how much I love Wendy's fries :)
+      `;
+
+    }
+
+    else {
+
+      result.innerHTML = `
+        <strong>
+          YOU GOT IT! 🥳💙
+        </strong>
+        <br>
+        Teddy bear :)
+      `;
+
+    }
+
+  }
+
+  else if (
+    state.guesses.length >= 6
+  ) {
+
+    result.innerHTML = `
+      The answer was
+      <strong>${answer}</strong>! 😂
+    `;
+
+  }
+
+  else {
+
+    result.textContent =
+      `${6 - state.guesses.length} guesses left. 👀`;
+
+  }
+
+}
+
+
+/* =====================================================
+   MATH GAME
+===================================================== */
+
+function checkMath() {
+
+  const answers = [
+    9,
+    12,
+    15,
+    22,
+    5,
+    25,
+    15,
+    21,
+    21,
+    21
+  ];
+
+
+  const values =
+    answers.map(
+      (_, index) => {
+
+        return Number(
+          document.getElementById(
+            "m" + (index + 1)
+          ).value
+        );
+
+      }
+    );
+
+
+  const result =
+    document.getElementById(
+      "mathresult"
+    );
+
+
+  if (
+    values.every(
+      (value, index) =>
+        value === answers[index]
+    )
+  ) {
+
+    result.innerHTML = `
+      <strong>
+        YOU SOLVED IT! 🥳
+      </strong>
+      <br>
+      <span style="font-size:25px">
+        I LOVE YOU 🤍
+      </span>
+    `;
+
+  }
+
+  else {
+
+    result.textContent =
+      "Hmm… one or more answers isn't quite right. Check your math and try again! 👀";
+
+  }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+renderDays();
+
+setInterval(
+  renderDays,
+  60000
 );
 
 </script>
