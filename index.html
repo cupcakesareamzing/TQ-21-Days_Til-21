@@ -1,1 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>21 Days 'Til 21 — TQ</title>
+
+  <style>
+    /* =========================================================
+       TQ'S 21 DAYS 'TIL 21
+       COLORS
+       ========================================================= */
+
+    :root {
+      --cream: #f8f5ee;
+      --cream-light: #fffdf8;
+      --navy: #102a43;
+      --navy-light: #1d405f;
+      --gold: #b5965c;
+      --gold-light: #d8c18f;
+      --text: #263746;
+      --muted: #7b858d;
+      --white: #ffffff;
+      --shadow: 0 12px 35px rgba(16, 42, 67, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at top,
+          var(--cream-light) 0%,
+          var(--cream) 60%,
+          #eee9df 100%
+        );
+      color: var(--navy);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    /* =========================================================
+       MAIN CONTAINER
+       ========================================================= */
+
+    .container {
+      width: min(1000px, 92%);
+      margin: auto;
+      padding: 50px 0 70px;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .header {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .small-title {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(42px, 8vw, 76px);
+      line-height: 1;
+      margin: 0;
+      color: var(--navy);
+    }
+
+    .for-tq {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 23px;
+      font-style: italic;
+      margin-top: 14px;
+      color: var(--navy-light);
+    }
+
+    .gold-line {
+      width: 70px;
+      height: 1px;
+      background: var(--gold);
+      margin: 25px auto;
+    }
+
+    .dates {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       COUNTDOWN
+       ========================================================= */
+
+    .countdown {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .countdown-number {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 48px;
+      color: var(--navy);
+    }
+
+    .countdown-text {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    /* =========================================================
+       DAY GRID
+       ========================================================= */
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+    }
+
+    .day-card {
+      min-height: 150px;
+      border: 1px solid rgba(16, 42, 67, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.92);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      transition: all 0.25s ease;
+    }
+
+    button.day-card {
+      cursor: pointer;
+      color: var(--navy);
+    }
+
+    button.day-card:hover:not(:disabled) {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 40px rgba(16, 42, 67, 0.17);
+    }
+
+    .day-number {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 43px;
+      line-height: 1;
+    }
+
+    .day-label {
+      margin-top: 9px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .day-status {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* UNLOCKED */
+
+    .unlocked {
+      border: 1px solid var(--gold);
+      background: linear-gradient(
+        145deg,
+        #fffdf8,
+        #f6efe3
+      );
+    }
+
+    .unlocked .day-status {
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    /* LOCKED */
+
+    .locked {
+      opacity: 0.55;
+      cursor: not-allowed !important;
+    }
+
+    .locked .day-number {
+      color: #77838d;
+    }
+
+    /* =========================================================
+       BIRTHDAY SECTION
+       ========================================================= */
+
+    .birthday-section {
+      display: none;
+      margin-top: 30px;
+      padding: 45px 25px;
+      text-align: center;
+      border-radius: 25px;
+      background: var(--navy);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .birthday-section h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 6vw, 55px);
+      font-weight: 400;
+      margin: 12px 0;
+    }
+
+    .birthday-section p {
+      max-width: 600px;
+      margin: 15px auto 25px;
+      color: #e5ebf0;
+      line-height: 1.7;
+    }
+
+    .birthday-button {
+      border: 1px solid var(--gold-light);
+      background: transparent;
+      color: white;
+      padding: 13px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .birthday-button:hover {
+      background: var(--gold);
+    }
+
+    /* =========================================================
+       MODAL
+       ========================================================= */
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      background: rgba(5, 17, 29, 0.72);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      width: min(680px, 100%);
+      max-height: 88vh;
+      overflow-y: auto;
+      background: var(--cream-light);
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .close-button {
+      position: absolute;
+      right: 18px;
+      top: 13px;
+      border: none;
+      background: none;
+      color: var(--navy);
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .modal-day {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .modal-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--navy);
+      margin: 10px 0 25px;
+    }
+
+    .modal-body {
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .modal-body img {
+      max-width: 100%;
+      border-radius: 16px;
+      margin: 15px 0;
+    }
+
+    .modal-body video {
+      width: 100%;
+      border-radius: 16px;
+      margin: 15px 0;
+    }
+
+    .modal-body a {
+      color: var(--navy);
+      font-weight: bold;
+    }
+
+    .placeholder {
+      border: 1px dashed #b7aa96;
+      border-radius: 16px;
+      padding: 25px;
+      margin-top: 20px;
+      background: #fbf7ef;
+      text-align: center;
+      color: #73766f;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 700px) {
+
+      .container {
+        padding-top: 35px;
+      }
+
+      .days-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .day-card {
+        min-height: 125px;
+        padding: 10px;
+        border-radius: 15px;
+      }
+
+      .day-number {
+        font-size: 35px;
+      }
+
+      .day-label {
+        font-size: 8px;
+        letter-spacing: 1px;
+      }
+
+      .day-status {
+        font-size: 9px;
+      }
+
+      .modal-content {
+        padding: 30px 22px;
+      }
+
+      .modal-title {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 400px) {
+
+      .days-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .day-card {
+        min-height: 110px;
+      }
+
+      .day-number {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
+
+  <header class="header">
+
+    <div class="small-title">
+      A little something for
+    </div>
+
+    <h1>
+      21 Days 'Til 21
+    </h1>
+
+    <div class="for-tq">
+      for TQ ♡
+    </div>
+
+    <div class="gold-line"></div>
+
+    <div class="dates">
+      September 3 — September 24, 2026
+    </div>
+
+  </header>
+
+
+  <!-- =======================================================
+       COUNTDOWN
+       ======================================================= -->
+
+  <div class="countdown">
+
+    <div id="countdownNumber" class="countdown-number">
+      21
+    </div>
+
+    <div class="countdown-text">
+      days until TQ turns 21
+    </div>
+
+  </div>
+
+
+  <!-- =======================================================
+       DAY BUTTONS
+       ======================================================= -->
+
+  <main>
+
+    <div id="daysGrid" class="days-grid"></div>
+
+
+    <!-- =====================================================
+         BIRTHDAY SECTION
+         ===================================================== -->
+
+    <section id="birthdaySection" class="birthday-section">
+
+      <div class="small-title" style="color: #d8c18f;">
+        September 24, 2026
+      </div>
+
+      <h2>
+        Happy 21st Birthday, TQ ♡
+      </h2>
+
+      <p>
+        You made it to 21.
+        Now it's time for your final surprise.
+      </p>
+
+      <button
+        class="birthday-button"
+        onclick="openBirthday()"
+      >
+        Open Your Birthday Surprise
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    Made with love ♡
+  </footer>
+
+</div>
+
+
+<!-- =========================================================
+     POP-UP WINDOW
+     ========================================================= -->
+
+<div
+  id="modal"
+  class="modal"
+  onclick="closeIfOutside(event)"
+>
+
+  <div class="modal-content">
+
+    <button
+      class="close-button"
+      onclick="closeModal()"
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <div
+      id="modalDay"
+      class="modal-day"
+    ></div>
+
+    <div
+      id="modalTitle"
+      class="modal-title"
+    ></div>
+
+    <div
+      id="modalBody"
+      class="modal-body"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   IMPORTANT DATES
+   ============================================================
+
+   DO NOT CHANGE THESE unless you want to change the countdown.
+
+   Day 1 = September 3, 2026
+   Day 21 = September 23, 2026
+   Birthday = September 24, 2026
+   ============================================================ */
+
+const START_DATE = new Date("2026-09-03T00:00:00");
+
+const BIRTHDAY_DATE = new Date("2026-09-24T00:00:00");
+
+
+/* ============================================================
+   YOUR 21 SURPRISES
+   ============================================================
+
+   THIS IS THE MAIN PART YOU WILL EDIT.
+
+   Each day has:
+
+   title:
+   The title TQ sees when he opens the day.
+
+   content:
+   The actual surprise.
+
+   You can use normal HTML.
+
+   Examples:
+
+   TEXT:
+   <p>Hello TQ! ♡</p>
+
+   PHOTO:
+   <img src="YOUR-PHOTO-LINK-HERE">
+
+   LINK:
+   <a href="YOUR-LINK-HERE" target="_blank">
+      Click here ♡
+   </a>
+
+   VIDEO:
+   <video controls>
+      <source src="YOUR-VIDEO-LINK-HERE" type="video/mp4">
+   </video>
+
+   ============================================================ */
+
+
+const surprises = {
+
+
+  /* ==========================================================
+     DAY 1
+     ========================================================== */
+
+  1: {
+    title: "And So It Begins…",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Welcome to your 21 Days 'Til 21 countdown, TQ ♡
+      </p>
+
+      <p>
+        For the next 21 days, you have one little surprise
+        waiting for you each day.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 1 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 2
+     ========================================================== */
+
+  2: {
+    title: "Day 2",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 2 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 2 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 3
+     ========================================================== */
+
+  3: {
+    title: "Day 3",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 3 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 3 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 4
+     ========================================================== */
+
+  4: {
+    title: "Day 4",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 4 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 4 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 5
+     ========================================================== */
+
+  5: {
+    title: "Day 5",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 5 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 5 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 6
+     ========================================================== */
+
+  6: {
+    title: "Day 6",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 6 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 6 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 7
+     ========================================================== */
+
+  7: {
+    title: "Day 7",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 7 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 7 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 8
+     ========================================================== */
+
+  8: {
+    title: "Day 8",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 8 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 8 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 9
+     ========================================================== */
+
+  9: {
+    title: "Day 9",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 9 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 9 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 10
+     ========================================================== */
+
+  10: {
+    title: "Day 10",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 10 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 10 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 11
+     ========================================================== */
+
+  11: {
+    title: "Day 11",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 11 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 11 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 12
+     ========================================================== */
+
+  12: {
+    title: "Day 12",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 12 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 12 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 13
+     ========================================================== */
+
+  13: {
+    title: "Day 13",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 13 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 13 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 14
+     ========================================================== */
+
+  14: {
+    title: "Day 14",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 14 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 14 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 15
+     ========================================================== */
+
+  15: {
+    title: "Day 15",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 15 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 15 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 16
+     ========================================================== */
+
+  16: {
+    title: "Day 16",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 16 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 16 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 17
+     ========================================================== */
+
+  17: {
+    title: "Day 17",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 17 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 17 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 18
+     ========================================================== */
+
+  18: {
+    title: "Day 18",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 18 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 18 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 19
+     ========================================================== */
+
+  19: {
+    title: "Day 19",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 19 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 19 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 20
+     ========================================================== */
+
+  20: {
+    title: "Day 20",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        Your Day 20 message goes here.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 20 surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  },
+
+
+  /* ==========================================================
+     DAY 21
+     ========================================================== */
+
+  21: {
+    title: "One More Sleep…",
+
+    content: `
+      <!-- EDIT HERE -->
+
+      <p>
+        ONE MORE SLEEP. 👀
+      </p>
+
+      <p>
+        Tomorrow is the big day, TQ.
+      </p>
+
+      <div class="placeholder">
+        ✦ Put your Day 21 / birthday-eve surprise here ✦
+      </div>
+
+      <!-- END EDIT -->
+    `
+  }
+
+};
+
+
+/* ============================================================
+   CALCULATE WHICH DAY IS UNLOCKED
+   ============================================================ */
+
+function getDaysUnlocked() {
+
+  const today = new Date();
+
+  const currentDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+
+  const start = new Date(
+    START_DATE.getFullYear(),
+    START_DATE.getMonth(),
+    START_DATE.getDate()
+  );
+
+  const difference =
+    Math.floor(
+      (currentDate - start) / 86400000
+    );
+
+  return Math.max(
+    0,
+    Math.min(21, difference + 1)
+  );
+}
+
+
+/* ============================================================
+   CREATE THE 21 DAY BUTTONS
+   ============================================================ */
+
+function renderDays() {
+
+  const grid =
+    document.getElementById("daysGrid");
+
+  const unlocked =
+    getDaysUnlocked();
+
+  grid.innerHTML = "";
+
+  for (
+    let day = 1;
+    day <= 21;
+    day++
+  ) {
+
+    const isUnlocked =
+      day <= unlocked;
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "day-card " +
+      (isUnlocked
+        ? "unlocked"
+        : "locked");
+
+    button.disabled =
+      !isUnlocked;
+
+    button.innerHTML = `
+
+      <div class="day-number">
+        ${day}
+      </div>
+
+      <div class="day-label">
+        Day ${day}
+      </div>
+
+      <div class="day-status">
+        ${
+          isUnlocked
+            ? "✦ OPEN"
+            : "🔒 LOCKED"
+        }
+      </div>
+
+    `;
+
+    if (isUnlocked) {
+
+      button.onclick =
+        function() {
+          openDay(day);
+        };
+
+    }
+
+    grid.appendChild(button);
+  }
+}
+
+
+/* ============================================================
+   UPDATE COUNTDOWN
+   ============================================================ */
+
+function updateCountdown() {
+
+  const today = new Date();
+
+  const birthday =
+    new Date(BIRTHDAY_DATE);
+
+  const difference =
+    Math.ceil(
+      (birthday - today) / 86400000
+    );
+
+  const countdown =
+    document.getElementById(
+      "countdownNumber"
+    );
+
+  if (difference > 0) {
+
+    countdown.textContent =
+      difference;
+
+  } else {
+
+    countdown.textContent =
+      "21";
+
+  }
+}
+
+
+/* ============================================================
+   OPEN A DAY
+   ============================================================ */
+
+function openDay(day) {
+
+  const surprise =
+    surprises[day];
+
+  if (!surprise) return;
+
+  document.getElementById(
+    "modalDay"
+  ).textContent =
+    "Day " + day;
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent =
+    surprise.title;
+
+  document.getElementById(
+    "modalBody"
+  ).innerHTML =
+    surprise.content;
+
+  document
+    .getElementById("modal")
+    .classList
+    .add("show");
+}
+
+
+/* ============================================================
+   OPEN BIRTHDAY SURPRISE
+   ============================================================ */
+
+function openBirthday() {
+
+  document.getElementById(
+    "modalDay"
+  ).textContent =
+    "September 24, 2026";
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent =
+    "Happy 21st Birthday, TQ ♡";
+
+  document.getElementById(
+    "modalBody"
+  ).innerHTML = `
+
+    <!-- =========================================
+         EDIT YOUR FINAL BIRTHDAY MESSAGE HERE
+         ========================================= -->
+
+    <p>
+      Happy 21st birthday, TQ! ♡
+    </p>
+
+    <p>
+      You officially made it.
+    </p>
+
+    <div class="placeholder">
+      ✦ PUT YOUR BIG FINAL BIRTHDAY MESSAGE HERE ✦
+      <br><br>
+      You can also add photos, videos,
+      playlists, or clues about your real-life presents.
+    </div>
+
+    <!-- END EDIT -->
+
+  `;
+
+  document
+    .getElementById("modal")
+    .classList
+    .add("show");
+}
+
+
+/* ============================================================
+   CLOSE MODAL
+   ============================================================ */
+
+function closeModal() {
+
+  document
+    .getElementById("modal")
+    .classList
+    .remove("show");
+}
+
+
+function closeIfOutside(event) {
+
+  if (
+    event.target ===
+    document.getElementById("modal")
+  ) {
+
+    closeModal();
+
+  }
+
+}
+
+
+/* ============================================================
+   SHOW BIRTHDAY SECTION ON SEPTEMBER 24
+   ============================================================ */
+
+function checkBirthday() {
+
+  const today = new Date();
+
+  const birthday =
+    new Date(BIRTHDAY_DATE);
+
+  const birthdaySection =
+    document.getElementById(
+      "birthdaySection"
+    );
+
+  if (today >= birthday) {
+
+    birthdaySection.style.display =
+      "block";
+
+  }
+
+}
+
+
+/* ============================================================
+   START EVERYTHING
+   ============================================================ */
+
+renderDays();
+updateCountdown();
+checkBirthday();
+
+
+/*
+   Update the page every minute.
+   This means if TQ happens to have the page open
+   when midnight passes, the page can refresh its
+   locked/unlocked state.
+*/
+
+setInterval(function() {
+
+  renderDays();
+  updateCountdown();
+  checkBirthday();
+
+}, 60000);
+
+
+/*
+   Allow ESC key to close the popup.
+*/
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (event.key === "Escape") {
+      closeModal();
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
